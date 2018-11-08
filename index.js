@@ -1,8 +1,13 @@
+import { getRandomColor } from "./helpers";
+
+// SETUP
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
 canvas.width = window.innerWidth * 0.85;
 canvas.height = window.innerHeight;
+
+const xOffset = window.innerWidth - canvas.width;
 
 const mouse = {
   x: undefined,
@@ -10,30 +15,19 @@ const mouse = {
 };
 
 window.addEventListener("mousemove", event => onMouseMove(event));
+
 function onMouseMove(event) {
   mouse.x = event.x;
   mouse.y = event.y;
 }
+
+window.addEventListener("resize", resizeWindow);
 
 function resizeWindow() {
   canvas.width = window.innerWidth * 0.85;
   canvas.height = window.innerHeight;
   makeCircles(200, 10);
 }
-
-window.addEventListener("resize", resizeWindow);
-
-function getRandomColor() {
-  const letters = "0123456789ABCDEF".split("");
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.round(Math.random() * 15)];
-  }
-  return color;
-}
-
-const xSpeedSlider = document.querySelector("#x-speed");
-const ySpeedSlider = document.querySelector("#y-speed");
 
 class Circle {
   constructor(x, y, radius) {
@@ -43,7 +37,7 @@ class Circle {
     this.color = getRandomColor();
     this.minRadius = radius;
     this.xPositive = true;
-    this.yPositive = false;
+    this.yPositive = true;
   }
 
   draw() {
@@ -62,6 +56,8 @@ class Circle {
   }
 
   checkBoundaries() {
+    const xSpeedSlider = document.querySelector("#x-speed");
+    const ySpeedSlider = document.querySelector("#y-speed");
     let xSpeed = parseInt(xSpeedSlider.value);
     let ySpeed = parseInt(ySpeedSlider.value);
 
@@ -72,17 +68,14 @@ class Circle {
     if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
       this.yPositive = !this.yPositive;
     }
-    if (this.yPositive) this.y += ySpeed;
-    if (!this.yPositive) this.y -= ySpeed;
 
-    if (this.xPositive) this.x += xSpeed;
-    if (!this.xPositive) this.x -= xSpeed;
+    this.xPositive ? (this.x += xSpeed) : (this.x -= xSpeed);
+    this.yPositive ? (this.y += ySpeed) : (this.y -= ySpeed);
   }
 
   growCircles() {
     const maxRadius = 80;
     const maxDistance = 50;
-    const xOffset = window.innerWidth - canvas.width;
 
     if (
       Math.abs(mouse.x - this.x - xOffset) < maxDistance &&
@@ -96,9 +89,13 @@ class Circle {
     }
   }
 }
+// END SETUP
 
+// MAIN
 let circles = [];
 makeCircles(200, 10);
+animate();
+
 function makeCircles(amount, radius) {
   circles = [];
 
@@ -117,5 +114,4 @@ function animate() {
 
   circles.forEach(circle => circle.update());
 }
-
-animate();
+// END MAIN
