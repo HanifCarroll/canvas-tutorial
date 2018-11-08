@@ -11,6 +11,10 @@ body {
   margin: 0;
 }
 
+h3 {
+  text-align: center;
+}
+
 .controls {
   display: inline-block;
   height: 100vh;
@@ -18,7 +22,9 @@ body {
   min-width: 120px;
   padding-left: 10px;
 }
-
+label {
+  display: block;
+}
 input {
   max-width: 100px;
 }

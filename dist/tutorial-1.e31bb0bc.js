@@ -122,8 +122,13 @@ function getRandomColor() {
 
   return color;
 }
-},{}],"index.js":[function(require,module,exports) {
+},{}],"Circle.js":[function(require,module,exports) {
 "use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
 var _helpers = require("./helpers");
 
@@ -133,15 +138,12 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-// SETUP
 var canvas = document.querySelector("canvas");
 var c = canvas.getContext("2d");
-canvas.width = window.innerWidth * 0.85;
-canvas.height = window.innerHeight;
 var xOffset = window.innerWidth - canvas.width;
 var mouse = {
-  x: undefined,
-  y: undefined
+  x: null,
+  y: null
 };
 window.addEventListener("mousemove", function (event) {
   return onMouseMove(event);
@@ -150,14 +152,6 @@ window.addEventListener("mousemove", function (event) {
 function onMouseMove(event) {
   mouse.x = event.x;
   mouse.y = event.y;
-}
-
-window.addEventListener("resize", resizeWindow);
-
-function resizeWindow() {
-  canvas.width = window.innerWidth * 0.85;
-  canvas.height = window.innerHeight;
-  makeCircles(200, 10);
 }
 
 var Circle =
@@ -230,12 +224,37 @@ function () {
   }]);
 
   return Circle;
-}(); // END SETUP
+}();
+
+exports.default = Circle;
+},{"./helpers":"helpers.js"}],"index.js":[function(require,module,exports) {
+"use strict";
+
+var _Circle = _interopRequireDefault(require("./Circle"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// SETUP
+var canvas = document.querySelector("canvas");
+var c = canvas.getContext("2d");
+var balls = document.getElementById("balls");
+balls.addEventListener("input", function () {
+  return makeCircles(balls.valueAsNumber, 10);
+});
+canvas.width = window.innerWidth * 0.85;
+canvas.height = window.innerHeight;
+window.addEventListener("resize", resizeWindow);
+
+function resizeWindow() {
+  canvas.width = window.innerWidth * 0.85;
+  canvas.height = window.innerHeight;
+  makeCircles(balls.valueAsNumber, 10);
+} // END SETUP
 // MAIN
 
 
 var circles = [];
-makeCircles(200, 10);
+makeCircles(balls.valueAsNumber, 10);
 animate();
 
 function makeCircles(amount, radius) {
@@ -245,7 +264,7 @@ function makeCircles(amount, radius) {
     radius = Math.random() * 15 + 5;
     var x = Math.random() * (canvas.width - radius * 2) + radius;
     var y = Math.random() * (canvas.height - radius * 2) + radius;
-    circles.push(new Circle(x, y, radius));
+    circles.push(new _Circle.default(x, y, radius));
   }
 }
 
@@ -256,7 +275,7 @@ function animate() {
     return circle.update();
   });
 } // END MAIN
-},{"./helpers":"helpers.js"}],"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./Circle":"Circle.js"}],"../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -283,7 +302,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39531" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37727" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

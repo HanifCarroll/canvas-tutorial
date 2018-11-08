@@ -3,7 +3,9 @@ import Circle from "./Circle";
 // SETUP
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
+const balls = document.getElementById("balls");
 
+balls.addEventListener("input", () => makeCircles(balls.valueAsNumber, 10));
 canvas.width = window.innerWidth * 0.85;
 canvas.height = window.innerHeight;
 
@@ -12,13 +14,13 @@ window.addEventListener("resize", resizeWindow);
 function resizeWindow() {
   canvas.width = window.innerWidth * 0.85;
   canvas.height = window.innerHeight;
-  makeCircles(200, 10);
+  makeCircles(balls.valueAsNumber, 10);
 }
 // END SETUP
 
 // MAIN
 let circles = [];
-makeCircles(200, 10);
+makeCircles(balls.valueAsNumber, 10);
 animate();
 
 function makeCircles(amount, radius) {
