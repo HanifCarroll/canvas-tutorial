@@ -11,22 +11,28 @@
     <div id="container">
       <div class="controls">
         <h3>Settings</h3>
-        <input
-          type="range"
-          name="y-speed"
-          id="x-speed"
-          min="0.1"
-          max="10"
-          value="1"
-        />
-        <input
-          type="range"
-          name="y-speed"
-          id="y-speed"
-          min="0.1"
-          max="10"
-          value="1"
-        />
+        <div class="setting">
+          <label for="x-speed">X-Axis Velocity</label>
+          <input
+            type="range"
+            name="x-speed"
+            id="x-speed"
+            min="0.1"
+            max="10"
+            value="1"
+          />
+        </div>
+        <div class="setting">
+          <label for="y-speed">Y-Axis Velocity</label>
+          <input
+            type="range"
+            name="y-speed"
+            id="y-speed"
+            min="0.1"
+            max="10"
+            value="1"
+          />
+        </div>
       </div>
       <canvas></canvas>
     </div>
