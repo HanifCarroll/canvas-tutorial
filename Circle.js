@@ -8,10 +8,10 @@ function getRandomColor() {
 }
 
 const canvas = document.querySelector("canvas");
+const c = canvas.getContext("2d");
 
-export default class Circle {
-  constructor(c, x, y, radius) {
-    this.c = c;
+class Circle {
+  constructor(x, y, radius) {
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -21,7 +21,8 @@ export default class Circle {
   }
 
   draw() {
-    const { c, x, y, radius, color } = this;
+    const { x, y, radius, color } = this;
+
     c.beginPath();
     c.arc(x, y, radius, 0, Math.PI * 2, false);
     c.fillStyle = color;
