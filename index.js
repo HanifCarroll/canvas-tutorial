@@ -57,7 +57,7 @@ class Circle {
 
   update() {
     this.checkBoundaries();
-    // this.growCircles();
+    this.growCircles();
     this.draw();
   }
 
@@ -65,43 +65,36 @@ class Circle {
     let xSpeed = parseInt(xSpeedSlider.value);
     let ySpeed = parseInt(ySpeedSlider.value);
 
-    if (this.y + this.radius > canvas.height) {
-      // this.yPositive = true;
-      this.y += ySpeed;
-    }
-
-    if (this.y - this.radius < 0) {
-      // this.yPositive = false;
-      this.y -= ySpeed;
-    }
-
     if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-      this.dx = -this.dx;
+      this.xPositive = !this.xPositive;
     }
 
-    // if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-    //   ySpeed = -ySpeed;
-    // }
+    if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+      this.yPositive = !this.yPositive;
+    }
+    if (this.yPositive) this.y += ySpeed;
+    if (!this.yPositive) this.y -= ySpeed;
 
-    this.x += xSpeed;
-    this.y += ySpeed;
+    if (this.xPositive) this.x += xSpeed;
+    if (!this.xPositive) this.x -= xSpeed;
   }
 
-  // growCircles() {
-  //   const maxRadius = 80;
-  //   const maxDistance = 50;
+  growCircles() {
+    const maxRadius = 80;
+    const maxDistance = 50;
+    const xOffset = window.innerWidth - canvas.width;
 
-  //   if (
-  //     Math.abs(mouse.x - this.x) < maxDistance &&
-  //     Math.abs(mouse.y - this.y) < maxDistance
-  //   ) {
-  //     if (this.radius < maxRadius) {
-  //       this.radius += 1;
-  //     }
-  //   } else if (this.radius > this.minRadius) {
-  //     this.radius -= 1;
-  //   }
-  // }
+    if (
+      Math.abs(mouse.x - this.x - xOffset) < maxDistance &&
+      Math.abs(mouse.y - this.y) < maxDistance
+    ) {
+      if (this.radius < maxRadius) {
+        this.radius += 1;
+      }
+    } else if (this.radius > this.minRadius) {
+      this.radius -= 1;
+    }
+  }
 }
 
 let circles = [];
