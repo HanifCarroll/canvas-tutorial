@@ -16,11 +16,11 @@ h3 {
 }
 
 .controls {
+  text-align: center;
   display: inline-block;
   height: 100vh;
   width: 15vw;
   min-width: 120px;
-  padding-left: 10px;
 }
 label {
   display: block;
